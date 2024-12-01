@@ -26,6 +26,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Application", "te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Domain", "test\UnitTests.Domain\UnitTests.Domain.csproj", "{0A9BBB57-1B61-4775-A254-20A7A9338485}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82FBA3D8-DE28-4AD8-B2FF-B84F2312ADDE}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ui.Console", "src\Ui.Console\Ui.Console.csproj", "{3A77D059-AD5B-4BBF-842B-EF79A74916D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +52,7 @@ Global
 		{FB66323F-AAF6-4707-A5B9-E2F99AC66AC0} = {46C29BD2-86D4-47FC-90AE-92B8C3E62DCE}
 		{28C089FC-1106-4C05-ADD6-5241AF0770AB} = {46C29BD2-86D4-47FC-90AE-92B8C3E62DCE}
 		{0A9BBB57-1B61-4775-A254-20A7A9338485} = {46C29BD2-86D4-47FC-90AE-92B8C3E62DCE}
+		{3A77D059-AD5B-4BBF-842B-EF79A74916D2} = {6DEFA533-3FBA-447D-A648-A244516430A7}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7135ACB2-E129-4FD5-BCB6-3CBC83B03DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -89,5 +99,9 @@ Global
 		{0A9BBB57-1B61-4775-A254-20A7A9338485}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A9BBB57-1B61-4775-A254-20A7A9338485}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A9BBB57-1B61-4775-A254-20A7A9338485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A77D059-AD5B-4BBF-842B-EF79A74916D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A77D059-AD5B-4BBF-842B-EF79A74916D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A77D059-AD5B-4BBF-842B-EF79A74916D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A77D059-AD5B-4BBF-842B-EF79A74916D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

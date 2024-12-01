@@ -4,6 +4,17 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AssemblyName>DA.Anubis.Application</AssemblyName>
+        <RootNamespace>DA.Anubis.Application</RootNamespace>
+        <IsPackable>false</IsPackable>
+        <Authors>DutchAntimony</Authors>
+        <Company>DA</Company>
+        <Product>Anubis</Product>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Application.Contract\Application.Contract.csproj" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
 
 </Project>
