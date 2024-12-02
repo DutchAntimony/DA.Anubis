@@ -5,6 +5,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AssemblyName>DA.Anubis.Tests.CreateDatabase</AssemblyName>
+        <RootNamespace>DA.Anubis.Tests.CreateDatabase</RootNamespace>
+        <IsPackable>false</IsPackable>
+        <Authors>DutchAntimony</Authors>
+        <Company>DA</Company>
+        <Product>Anubis</Product>
     </PropertyGroup>
 
     <ItemGroup>

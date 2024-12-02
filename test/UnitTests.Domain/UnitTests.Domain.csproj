@@ -5,16 +5,24 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
+        <AssemblyName>DA.Anubis.Tests.UnitTests.Application</AssemblyName>
+        <RootNamespace>DA.Anubis.Tests.UnitTests.Application</RootNamespace>
+        <IsPackable>false</IsPackable>
+        <Authors>DutchAntimony</Authors>
+        <Company>DA</Company>
+        <Product>Anubis</Product>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="coverlet.collector" Version="6.0.2"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
-        <PackageReference Include="xunit" Version="2.9.2"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2"/>
+        <PackageReference Include="coverlet.collector"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="Shouldly" />
+        <PackageReference Include="xunit"/>
+        <PackageReference Include="xunit.runner.visualstudio"/>
     </ItemGroup>
 
     <ItemGroup>
+        <Using Include="Shouldly"/>
         <Using Include="Xunit"/>
     </ItemGroup>
 
