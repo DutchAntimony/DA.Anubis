@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
         <AssemblyName>DA.Anubis.Domain</AssemblyName>
         <RootNamespace>DA.Anubis.Domain</RootNamespace>
         <IsPackable>false</IsPackable>
@@ -14,6 +15,16 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Domain.Contract\Domain.Contract.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DA.DDD.CoreLibrary" />
+      <PackageReference Include="DA.Options" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ConfiguratieAggregate\" />
+      <Folder Include="ContributieAggregate\" />
     </ItemGroup>
 
 </Project>

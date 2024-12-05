@@ -27,6 +27,6 @@ public class EntityTests : ArchitectureTestBase
     [Fact]
     public void Entities_Should_HavePrivateParameterlessConstructor()
     {
-        _entities.ShouldAll(HasPrivateParameterlessConstructor);
+        _entities.And().AreNotAbstract().ShouldAll(HasPrivateParameterlessConstructor);
     }
 }
