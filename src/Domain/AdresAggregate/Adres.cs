@@ -1,11 +1,6 @@
-using DA.Anubis.Domain.Contract.EntityKeys;
+using DA.Anubis.Domain.Contract.AggregateKeys;
 using DA.DDD.CoreLibrary.Entities;
 using DA.DDD.CoreLibrary.Entities.Auditing;
-using DA.Guards;
-using DA.Options;
-using DA.Options.Extensions;
-using DA.Results;
-using DA.Results.Issues;
 
 namespace DA.Anubis.Domain.AdresAggregate;
 
@@ -15,7 +10,6 @@ namespace DA.Anubis.Domain.AdresAggregate;
 public sealed class Adres : AggregateRoot<AdresId>, ISoftDeletableEntity
 {
     private LidId? _hoofdbewonerId;
-    private readonly ICollection<LidId> _ledenIds = [];
     private readonly List<AdresMutatie> _mutaties = [];
 
     /// <summary>
@@ -53,11 +47,6 @@ public sealed class Adres : AggregateRoot<AdresId>, ISoftDeletableEntity
     /// Land, is optioneel, indien niet ingevuld wordt uitgegaan van Nederland.
     /// </summary>
     public Option<string> Land => _land;
-    
-    /// <summary>
-    /// Collectie van alle leden woonachtig op dit adres.
-    /// </summary>
-    public IEnumerable<LidId> LedenIds => _ledenIds;
     
     /// <summary>
     /// Collectie van alle mutaties die hebben plaatsgevonden op dit adres.
@@ -103,24 +92,30 @@ public sealed class Adres : AggregateRoot<AdresId>, ISoftDeletableEntity
     public string GetAdresOnTwoLines() => $"{Straatnaam} {Huisnummer}{Environment.NewLine}" +
                                           $"{Postcode.ToUpper()}  {Woonplaats.ToUpper()}{Land.Map(land => $" ({land})").Reduce("")}";
 
-    
+
     /// <summary>
     /// Update het verantwoordelijke lid en boek een mutatie op.
     /// </summary>
-    public void SetOrUpdateHoofdbewoner(LidId lidId)
+    public Result<Adres> SetOrUpdateHoofdbewoner(LidId lidId)
     {
-        // we boeken alleen een mutatie op bij een wijziging, niet bij de eerste set actie.
-        if (HoofdbewonerId.TryGetValue(out var id))
+        if (HoofdbewonerId.TryGetValue(out var oudLidId))
         {
+            if (oudLidId == lidId)
+            {
+                return new UnmodifiedWarning(typeof(LidId));
+            }
+            
+            // we boeken alleen een mutatie op bij een wijziging, niet bij de eerste set actie.
             _mutaties.Add(new AdresMutatie(
                 adres: this, 
                 type: AdresMutatieType.NieuwVerantwoordelijkLid,
-                oldValue: id.ToString(),
+                oldValue: oudLidId.Value.ToString(),
                 newValue: lidId.Value.ToString()
             ));
         }
 
         HoofdbewonerId = lidId.EnsureNotDefault();
+        return this;
     }
     
     /// <summary>
@@ -136,24 +131,21 @@ public sealed class Adres : AggregateRoot<AdresId>, ISoftDeletableEntity
     public Result<Adres> CorrigeerAdres(string straatnaam, string huisnummer, string postcode, string woonplaats, Option<string> land)
     {
         
-        // todo: overweeg nog een refactor slag zodat alleen het gewijzigde veld wordt opgeslagen in de mutatie log. 
-        
-        return NumberOfChangedProperties() switch
-        {
-            0 => new UnmodifiedWarning(typeof(Adres)),
-            1 => UpdateFields(straatnaam, huisnummer, postcode, woonplaats, land),
-            _ => CreateValidationError("Er zijn te veel velden aangepast. Gebruik de verhuis opties indien er sprake is van een nieuw adres.")
-        };
-
-        int NumberOfChangedProperties() =>
+        var numberOfChangedProperties = 
             (straatnaam == Straatnaam ? 0 : 1) +
             (huisnummer == Huisnummer ? 0 : 1) +
             (postcode == Postcode ? 0 : 1) +
             (woonplaats == Woonplaats ? 0 : 1) +
             (land.Equals(Land) ? 0 : 1);
-
-        static ValidationError CreateValidationError(string message) => new(nameof(CorrigeerAdres), message);
-    }
+        
+        return numberOfChangedProperties switch
+        {
+            0 => new UnmodifiedWarning(typeof(Adres)),
+            1 => UpdateFields(straatnaam, huisnummer, postcode, woonplaats, land),
+            _ => new ValidationError(nameof(CorrigeerAdres),
+                "Er zijn te veel velden aangepast. Gebruik de verhuis opties indien er sprake is van een nieuw adres.")
+        };
+   }
    
     private Adres UpdateFields(string straatnaam, string huisnummer, string postcode, string woonplaats, Option<string> land)
     {

@@ -1,17 +1,10 @@
-using DA.Anubis.Domain.Contract.EntityKeys;
+using DA.Anubis.Domain.Contract.AggregateKeys;
 using DA.DDD.CoreLibrary.Entities;
-using DA.Guards;
-using DA.Options;
-using DA.Options.Extensions;
-using DA.Results;
-using DA.Results.Issues;
 
 namespace DA.Anubis.Domain.BetaalmethodeAggregate;
 
 public abstract class Betaalmethode : AggregateRoot<BetaalmethodeId>
 {
-    // ReSharper disable once CollectionNeverUpdated.Local - set by ORM
-    private readonly ICollection<LidId> _ledenIds = [];
     private LidId? _verantwoordelijkLidId;
     protected readonly ICollection<BetaalmethodeMutatie> MutatieCollectie = [];
 
@@ -24,11 +17,6 @@ public abstract class Betaalmethode : AggregateRoot<BetaalmethodeId>
         get => _verantwoordelijkLidId;
         private set => _verantwoordelijkLidId = value.AsNullable();
     }
-    
-    /// <summary>
-    /// Readonly collectie van alle met deze betaalwijze betalende leden.
-    /// </summary>
-    public IEnumerable<LidId> LedenIds => _ledenIds;
 
     /// <summary>
     /// Collectie van alle mutaties die hebben plaatsgevonden op deze betaalwijze.
@@ -41,26 +29,23 @@ public abstract class Betaalmethode : AggregateRoot<BetaalmethodeId>
     /// <param name="lidId">Het nieuwe lidId dat verantwoordelijk is voor deze betaalmethode.</param>
     public Result<Betaalmethode> SetOrUpdateVerantwoordelijkLidId(LidId lidId)
     {
-        if (VerantwoordelijkLidId.TryGetValue(out var oudLidId) && oudLidId == lidId)
+        if (VerantwoordelijkLidId.TryGetValue(out var oudLidId))
         {
-            return new UnmodifiedWarning(typeof(LidId));
+            if (oudLidId == lidId)
+            {
+                return new UnmodifiedWarning(typeof(LidId));
+            }
+
+            // we boeken alleen een mutatie op bij een wijziging, niet bij de eerste set actie.
+            MutatieCollectie.Add(new BetaalmethodeMutatie(
+                betaalmethode: this,
+                type: BetaalmethodeMutatieType.NieuwVerantwoordelijkLid,
+                oldValue: oudLidId.Value.ToString(),
+                newValue: lidId.Value.ToString()
+            ));
         }
 
-        if (!LedenIds.Contains(lidId))
-        {
-            return new InvalidOperationError(
-                "Kan geen lid verantwoordelijk maken dat niet als lid op dit adres is geregistreerd.");
-        }
-        
-        var oldValue = VerantwoordelijkLidId;
         VerantwoordelijkLidId = lidId.EnsureNotDefault();
-        MutatieCollectie.Add(new BetaalmethodeMutatie(
-            betaalmethode: this,
-            type: BetaalmethodeMutatieType.NieuwVerantwoordelijkLid,
-            oldValue: oldValue.Map(v => v.ToString()),
-            newValue: VerantwoordelijkLidId.Map(v => v.ToString())
-        ));
-        
         return this;
     }
 }

@@ -1,4 +1,4 @@
-using DA.Anubis.Domain.Contract.EntityKeys;
+using DA.Anubis.Domain.Contract.AggregateKeys;
 using DA.Anubis.Domain.Contract.Enumerations;
 using DA.DDD.CoreLibrary.Events;
 

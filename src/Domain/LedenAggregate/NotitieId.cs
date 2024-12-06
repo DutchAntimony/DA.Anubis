@@ -1,6 +1,6 @@
 using DA.DDD.CoreLibrary.Entities;
 
-namespace DA.Anubis.Domain.Contract.EntityKeys;
+namespace DA.Anubis.Domain.LedenAggregate;
 
 /// <summary>
 /// Uniek identifier van een notitie.

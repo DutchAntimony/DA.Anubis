@@ -27,4 +27,13 @@
       <Folder Include="ContributieAggregate\" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Using Include="DA.Guards"/>
+        <Using Include="DA.Options"/>
+        <Using Include="DA.Options.Extensions"/>
+        <Using Include="DA.Results"/>
+        <Using Include="DA.Results.Issues"/>
+        <Using Include="DA.Results.Extensions"/>
+    </ItemGroup>
+
 </Project>

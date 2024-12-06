@@ -1,6 +1,5 @@
-using DA.Anubis.Domain.Contract.EntityKeys;
+using DA.Anubis.Domain.Contract.AggregateKeys;
 using DA.DDD.CoreLibrary.Events;
-using DA.Options;
 
 namespace DA.Anubis.Domain.LedenAggregate.DomainEvents;
 
