@@ -76,6 +76,11 @@ public sealed class Lid : AggregateRoot<LidId>, ISoftDeletableEntity
     public IEnumerable<Notitie> Notities => _notities;
 
     /// <summary>
+    /// Collectie van alle mutaties die hebben plaatsgevonden op dit adres.
+    /// </summary>
+    public IEnumerable<LidMutatie> Mutaties => _mutaties;
+    
+    /// <summary>
     /// Een lid wordt niet uit de database verwijderd. In plaats daarvan wordt deletion info gebruikt
     /// waarin staat wie en wanneer dit lid verwijderd (uitgeschreven) is.
     /// </summary>
@@ -208,7 +213,6 @@ public sealed class Lid : AggregateRoot<LidId>, ISoftDeletableEntity
         AddDomainEvent(new LidBetaalwijzeGewijzigdEvent(this, oldBetaalmethodeId, BetaalmethodeId));
         return this;
     }
-    
     
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private Lid() { /* empty constructor for ORM */ }

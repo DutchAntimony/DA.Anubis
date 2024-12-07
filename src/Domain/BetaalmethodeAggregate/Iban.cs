@@ -15,7 +15,7 @@ public readonly record struct Iban
     public string ToFlatString() =>
         $"{Landcode}{ControleGetal}{BankIdentifier}{Rekeningnummer}";
 
-    private Iban(string value)
+    public Iban(string value)
     {
         value = value.Replace(" ", "").ToUpperInvariant();
         Landcode = value[..2];
