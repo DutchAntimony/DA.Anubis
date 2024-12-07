@@ -1,3 +1,4 @@
+using DA.Anubis.Domain.Common;
 using DA.Anubis.Domain.Contract.AggregateKeys;
 using DA.Anubis.Domain.Contract.Enumerations;
 using DA.Anubis.Domain.LedenAggregate.DomainEvents;
@@ -63,17 +64,20 @@ public sealed class Lid : AggregateRoot<LidId>, ISoftDeletableEntity
     /// <summary>
     /// Collectie van alle email adressen van dit lid.
     /// </summary>
-    public IEnumerable<Emailadres> Emailadressen => _emailadressen;
+    public IOrdinalCollection<Emailadres, EmailadresId> Emailadressen => 
+        new OrdinalCollection<Emailadres, EmailadresId>(_emailadressen);
 
     /// <summary>
     /// Collectie van alle telefoonnummers van dit lid.
     /// </summary>
-    public IEnumerable<Telefoonnummer> Telefoonnummers => _telefoonnummers;
+    public IOrdinalCollection<Telefoonnummer, TelefoonnummerId> Telefoonnummers =>
+        new OrdinalCollection<Telefoonnummer, TelefoonnummerId>(_telefoonnummers);
 
     /// <summary>
     /// Collectie van alle notities van dit lid.
     /// </summary>
-    public IEnumerable<Notitie> Notities => _notities;
+    public IOrdinalCollection<Notitie, NotitieId> Notities =>
+        new OrdinalCollection<Notitie, NotitieId>(_notities);
 
     /// <summary>
     /// Collectie van alle mutaties die hebben plaatsgevonden op dit adres.

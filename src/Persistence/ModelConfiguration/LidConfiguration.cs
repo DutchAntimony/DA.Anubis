@@ -61,9 +61,25 @@ public sealed class LidConfiguration : IEntityTypeConfiguration<Lid>
             .HasConversion<int>()
             .HasColumnOrder(9)
             .HasColumnName("Uitschrijfreden");
-        
-        //todo: add email, telefoon en notities.
 
+        builder.Ignore(lid => lid.Emailadressen);
+        builder.HasMany<Emailadres>("_emailadressen")
+            .WithOne()
+            .HasForeignKey(email => email.LidId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Ignore(lid => lid.Notities);
+        builder.HasMany<Notitie>("_notities")
+            .WithOne()
+            .HasForeignKey(notitie => notitie.LidId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Ignore(lid => lid.Telefoonnummers);
+        builder.HasMany<Telefoonnummer>("_telefoonnummers")
+            .WithOne()
+            .HasForeignKey(telefoonnummer => telefoonnummer.LidId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
         builder.Ignore(lid => lid.Mutaties);
         builder.HasMany<LidMutatie>("_mutaties")
             .WithOne()
