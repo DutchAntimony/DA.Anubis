@@ -1,5 +1,6 @@
 using DA.Anubis.Domain.Common;
 using DA.DDD.CoreLibrary.Entities;
+using DA.Results.Shouldly;
 
 namespace DA.Anubis.Tests.UnitTests.Application.Common;
 
@@ -44,7 +45,7 @@ public class OrdinalCollectionTests
     {
         _ordinalCollection.Count.ShouldBe(0);
         var toMove = Insert5ElementsAndReturnMiddle();
-        _ordinalCollection.MoveEntityToTheBeginning(toMove.Id).ShouldBeTrue();
+        _ordinalCollection.MoveEntityToTheBeginning(toMove.Id).ShouldBeSuccess();
         VerifyExpectedOrderOfIndices([3,1,2,4,5]);
     }
 
@@ -53,7 +54,7 @@ public class OrdinalCollectionTests
     {
         _ordinalCollection.Count.ShouldBe(0);
         var toMove = Insert5ElementsAndReturnMiddle();
-        _ordinalCollection.MoveEntityUp(toMove.Id).ShouldBeTrue();
+        _ordinalCollection.MoveEntityUp(toMove.Id).ShouldBeSuccess();
         VerifyExpectedOrderOfIndices([1,3,2,4,5]);
     }
     
@@ -62,7 +63,7 @@ public class OrdinalCollectionTests
     {
         _ordinalCollection.Count.ShouldBe(0);
         var toMove = Insert5ElementsAndReturnMiddle();
-        _ordinalCollection.MoveEntityDown(toMove.Id).ShouldBeTrue();
+        _ordinalCollection.MoveEntityDown(toMove.Id).ShouldBeSuccess();
         VerifyExpectedOrderOfIndices([1,2,4,3,5]);
     }
     
@@ -71,7 +72,7 @@ public class OrdinalCollectionTests
     {
         _ordinalCollection.Count.ShouldBe(0);
         var toMove = Insert5ElementsAndReturnMiddle();
-        _ordinalCollection.MoveEntityToTheEnd(toMove.Id).ShouldBeTrue();
+        _ordinalCollection.MoveEntityToTheEnd(toMove.Id).ShouldBeSuccess();
         VerifyExpectedOrderOfIndices([1,2,4,5,3]);
     }
     

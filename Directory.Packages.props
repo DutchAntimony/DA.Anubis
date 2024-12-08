@@ -9,7 +9,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
     <PackageVersion Include="DA.DDD.ApplicationLibrary" Version="1.0.2" />
-    <PackageVersion Include="DA.DDD.CoreLibrary" Version="1.0.1" />
+    <PackageVersion Include="DA.DDD.CoreLibrary" Version="1.0.4" />
     <PackageVersion Include="DA.DDD.InfraLibrary" Version="1.0.0" />
     <PackageVersion Include="DA.DDD.PersistenceLibrary" Version="1.0.0" />
     <PackageVersion Include="DA.Options" Version="1.0.1" />

@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using DA.Anubis.Persistence;
-using DA.Anubis.Tests.CreateDatabase.Fakers;
+using DA.Anubis.Tests.CreateDatabase;
 using DA.DDD.CoreLibrary.ServiceDefinitions;
 using DA.Guards;
 using Microsoft.Extensions.Configuration;

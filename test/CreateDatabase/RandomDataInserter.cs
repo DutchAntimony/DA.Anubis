@@ -10,7 +10,7 @@ using DA.DDD.CoreLibrary.ServiceDefinitions;
 using DA.Options;
 using Microsoft.Extensions.Logging;
 
-namespace DA.Anubis.Tests.CreateDatabase.Fakers;
+namespace DA.Anubis.Tests.CreateDatabase;
 
 internal class RandomDataInserter(
     ILogger<RandomDataInserter> logger,
@@ -91,8 +91,22 @@ internal class RandomDataInserter(
         // add notities, telefoonnummers en emailadressen.
         while (_faker.Random.Double() < notitieProbability)
         {
-            
+            var notitie = new Notitie(lid, _faker.Lorem.Lines());
+            lid.Notities.Append(notitie);
         }
+        
+        while (_faker.Random.Double() < emailadresProbability)
+        {
+            var email = new Emailadres(lid, _faker.Person.Email);
+            lid.Emailadressen.Append(email);
+        }
+
+        while (_faker.Random.Double() < telefoonnummerProbability)
+        {
+            var telefoon = new Telefoonnummer(lid, _faker.Person.Phone);
+            lid.Telefoonnummers.Append(telefoon);
+        }
+        
         return lid;
     }
 
